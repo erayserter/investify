@@ -9,6 +9,7 @@ import { dark } from "@clerk/themes";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import { Navbar } from "@/app/components/navbar";
 import { cn } from "@/app/lib/utils";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
+  types: React.ReactNode;
 }) {
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
