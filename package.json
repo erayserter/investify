@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prisma-dev": "dotenv -e .env.local prisma migrate dev"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
@@ -24,6 +25,7 @@
     "@vercel/postgres": "^0.5.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dotenv-cli": "^7.3.0",
     "lucide-react": "^0.309.0",
     "next": "14.0.4",
     "next-themes": "^0.2.1",

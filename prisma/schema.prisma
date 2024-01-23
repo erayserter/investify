@@ -7,3 +7,11 @@ datasource db {
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+
+model User {
+  id             String         @id @default(uuid())
+  firstName      String
+  lastName       String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
