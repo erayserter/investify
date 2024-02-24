@@ -1,21 +1,36 @@
 "use client";
 
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [data, setData] = React.useState(null)
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    fetch('api/stocks/news')
-        .then(res => res.json())
-        .then(data => setData(data))
-  })
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
-  if (!data) return <div>Loading...</div>
-
-  console.log(data)
+  const handleButtonClick = () => {
+    router.push(`/stocks/${inputValue}/chart`);
+  };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Enter stock symbol"
+        style={{ backgroundColor: "lightblue", border: "2px solid blue", padding: "8px", borderRadius: "4px" }}
+      />
+      <button 
+        onClick={handleButtonClick}
+        style={{ backgroundColor: "lightgreen", border: "none", padding: "8px", borderRadius: "4px", cursor: "pointer" }}
+      >
+        Go to Chart
+      </button>
+    </main>
   );
 }
+
