@@ -15,8 +15,6 @@ import { Button } from "@/app/ui/button";
 export const ToggleTheme = () => {
   const { setTheme } = useTheme();
 
-  console.log("a");
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

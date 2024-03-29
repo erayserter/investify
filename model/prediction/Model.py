@@ -20,13 +20,13 @@ class Model:
 
     def predict(self, symbol):
         data = requests.get(
-            f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey=YNCMGFZYA6QVXNN9')
+            f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey=KAC4U304DX1ZWSES')
         data = data.json().get('Time Series (Daily)')
         filtered_data = {k: v for k, v in data.items() if k.startswith("2024")}
         array_data = [[k] + list(v.values()) for k, v in filtered_data.items()]
 
         data = requests.get(
-            f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={symbol}&apikey=YNCMGFZYA6QVXNN9&limit=1000')
+            f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={symbol}&apikey=KAC4U304DX1ZWSES&limit=1000')
         data = data.json().get('feed')
         sentiments_by_date = defaultdict(list)
         for item in data:
@@ -37,15 +37,12 @@ class Model:
                     sentiments_by_date[key].append(
                         float(sentiment['ticker_sentiment_score']) * float(sentiment['relevance_score']))
 
-        # # Calculate the average sentiment score for each day
         average_sentiments = {date: mean(scores) for date, scores in sentiments_by_date.items()}
-        #
+   
         average_sentiments_df = pd.DataFrame(list(average_sentiments.items()), columns=['date', 'average_sentiment'])
-        #
-        # # Convert array_data to DataFrame
+
         array_data_df = pd.DataFrame(array_data, columns=['date', 'open', 'high', 'low', 'close', 'volume'])
-        #
-        # # Merge the two DataFrames on the date column
+        
         df = pd.merge(array_data_df, average_sentiments_df, on='date')
 
         df = df.set_index('date').sort_index()

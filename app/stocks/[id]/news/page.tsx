@@ -1,5 +1,6 @@
 "use client";
 
+import { Angry, Frown, Laugh, Meh, Smile } from "lucide-react";
 import { useParams } from "next/navigation";
 import {useEffect, useState} from "react";
 import {
@@ -12,7 +13,6 @@ import {
     TableRow,
     TableFooter
   } from "@/components/ui/table"
-import { Angry, Frown, Laugh, Meh, Smile } from "lucide-react";
   
   interface CompanyData {
     "1. symbol": string;
@@ -65,10 +65,9 @@ import { Angry, Frown, Laugh, Meh, Smile } from "lucide-react";
     ticker_sentiment_label: string;
   }
 
-
 export default function News() {
     const { id } = useParams();
-    // fetch stock data with id
+
     const [news, setNews] = useState(null);
     const [details, setDetails] = useState(null);
 
@@ -81,7 +80,6 @@ export default function News() {
             .then((data) => setDetails(data));
     }, [id]);
 
-    
     if(news == null){
         return <div> </div>
     }
@@ -90,6 +88,7 @@ export default function News() {
     }
     const jsonData: JsonResponse = details;
     const newsData: NewsData = news;
+
 
     function formatDateTime(dateTimeString:string) {
       const year = parseInt(dateTimeString.substring(0, 4));
@@ -102,7 +101,7 @@ export default function News() {
       return new Date(year, month - 1, day, hour, minute, second);
   }
   
-    function emojis(score){
+    function emojis(score: any){
       if(score < -0.4){
         return <Angry/>
       }
@@ -119,8 +118,6 @@ export default function News() {
         return <Laugh/>
       }
     }
-  // Kullanım örneği:
-
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -152,9 +149,3 @@ export default function News() {
         </main>
     );
 }
-/*
-
-
-*/
-
- //KCK3AWRYB9LFSHFO
