@@ -18,20 +18,20 @@ class Model:
         self.training_scaler = pickle.load(open('prediction/training_scaler.pkl', 'rb'))
         self.inference_scaler = pickle.load(open('prediction/inference_scaler.pkl', 'rb'))
 
-    def predict(self):
+    def predict(self, symbol):
         data = requests.get(
-            'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=YNCMGFZYA6QVXNN9')
+            f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey=YNCMGFZYA6QVXNN9')
         data = data.json().get('Time Series (Daily)')
         filtered_data = {k: v for k, v in data.items() if k.startswith("2024")}
         array_data = [[k] + list(v.values()) for k, v in filtered_data.items()]
 
         data = requests.get(
-            'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=YNCMGFZYA6QVXNN9&limit=1000')
+            f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={symbol}&apikey=YNCMGFZYA6QVXNN9&limit=1000')
         data = data.json().get('feed')
         sentiments_by_date = defaultdict(list)
         for item in data:
             for sentiment in item['ticker_sentiment']:
-                if sentiment['ticker'] == 'AAPL':
+                if sentiment['ticker'] == symbol:
                     key = item['time_published'][:4] + "-" + item['time_published'][4:6] + "-" + item['time_published'][
                                                                                                  6:8]
                     sentiments_by_date[key].append(

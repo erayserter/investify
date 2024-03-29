@@ -7,6 +7,6 @@ from prediction.Model import model
 
 
 class PredictionAPIView(GenericAPIView):
-    def post(self, request, *args, **kwargs):
-        res = model.predict()
+    def get(self, request, symbol):
+        res = model.predict(symbol)
         return Response(res, status=status.HTTP_200_OK)
