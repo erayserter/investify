@@ -1,5 +1,6 @@
 "use client";
 
+import { Angry, Frown, Laugh, Meh, Smile } from "lucide-react";
 import { useParams } from "next/navigation";
 import {useEffect, useState} from "react";
 import {
@@ -91,6 +92,37 @@ export default function News() {
     const newsData: NewsData = news;
     
 
+    function formatDateTime(dateTimeString:string) {
+      const year = parseInt(dateTimeString.substring(0, 4));
+      const month = parseInt(dateTimeString.substring(4, 6));
+      const day = parseInt(dateTimeString.substring(6, 8));
+      const hour = parseInt(dateTimeString.substring(9, 11));
+      const minute = parseInt(dateTimeString.substring(11, 13));
+      const second = parseInt(dateTimeString.substring(13, 15));
+  
+      return new Date(year, month - 1, day, hour, minute, second);
+  }
+  
+    function emojis(score:any){
+      if(score < -0.4){
+        return <Angry/>
+      }
+      else if(score < -0.1){
+        return <Frown/>
+      }
+      else if(score < 0.1){
+        return <Meh/>
+      }
+      else if(score < 0.4){
+        return <Smile/>
+      }
+      else{
+        return <Laugh/>
+      }
+    }
+  // Kullanım örneği:
+
+
     return (
         <main>
             This is a news page of a stock with id: {id}
@@ -126,3 +158,9 @@ export default function News() {
         </main>
     );
 }
+/*
+
+
+*/
+
+ //KCK3AWRYB9LFSHFO
