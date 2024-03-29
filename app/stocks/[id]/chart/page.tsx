@@ -48,7 +48,7 @@ export default function Chart() {
 
   return (
     <div>
-      {candleData ? (
+      {candleData && (
         <ChartComponent data={candleData.map((item) => ({
             time: item.timestamp,
             open: parseFloat(item.data["1. open"]),
@@ -56,8 +56,6 @@ export default function Chart() {
             low: parseFloat(item.data["3. low"]),
             close: parseFloat(item.data["4. close"]),
         }))} />
-      ) : (
-        <div>Loading...</div>
       )}
     </div>
   );

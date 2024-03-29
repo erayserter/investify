@@ -97,10 +97,8 @@ export default function News() {
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            This is a news page of a stock with id: {id}
-            <h2>{jsonData.bestMatches[0]["2. name"]}</h2>
             <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableCaption>A list of {id} news.</TableCaption>
             <TableHeader>
                 <TableRow>
                 <TableHead className="w-[100px]">Author</TableHead>
