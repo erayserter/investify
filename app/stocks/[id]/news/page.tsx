@@ -65,10 +65,9 @@ import { Angry, Frown, Laugh, Meh, Smile } from "lucide-react";
     ticker_sentiment_label: string;
   }
 
-
 export default function News() {
     const { id } = useParams();
-    // fetch stock data with id
+
     const [news, setNews] = useState(null);
     const [details, setDetails] = useState(null);
 
@@ -81,7 +80,6 @@ export default function News() {
             .then((data) => setDetails(data));
     }, [id]);
 
-    
     if(news == null){
         return <div> </div>
     }
@@ -102,7 +100,7 @@ export default function News() {
       return new Date(year, month - 1, day, hour, minute, second);
   }
   
-    function emojis(score){
+    function emojis(score: any){
       if(score < -0.4){
         return <Angry/>
       }
@@ -119,15 +117,11 @@ export default function News() {
         return <Laugh/>
       }
     }
-  // Kullanım örneği:
-
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            This is a news page of a stock with id: {id}
             <h2>{jsonData.bestMatches[0]["2. name"]}</h2>
             <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
             <TableHeader>
                 <TableRow>
                 <TableHead className="w-[100px]">Author</TableHead>
@@ -154,9 +148,3 @@ export default function News() {
         </main>
     );
 }
-/*
-
-
-*/
-
- //KCK3AWRYB9LFSHFO
