@@ -12,9 +12,8 @@ interface ChartComponentProps {
 
 export const ChartComponent: React.FC<ChartComponentProps> = ({ data, colors }) => {
   const {
-    backgroundColor = 'white',
-    lineColor = '#2962FF',
-    textColor = 'black',
+    backgroundColor = '#020817',
+    textColor = 'white',
   } = colors || {};
 
   const chartContainerRef = useRef<HTMLDivElement>(null);

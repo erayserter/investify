@@ -1,5 +1,6 @@
 "use client";
 
+import { Angry, Frown, Laugh, Meh, Smile } from "lucide-react";
 import { useParams } from "next/navigation";
 import {useEffect, useState} from "react";
 import {
@@ -12,7 +13,6 @@ import {
     TableRow,
     TableFooter
   } from "@/components/ui/table"
-import { Angry, Frown, Laugh, Meh, Smile } from "lucide-react";
   
   interface CompanyData {
     "1. symbol": string;
@@ -90,6 +90,7 @@ export default function News() {
     }
     const jsonData: JsonResponse = details;
     const newsData: NewsData = news;
+    
 
     function formatDateTime(dateTimeString:string) {
       const year = parseInt(dateTimeString.substring(0, 4));
@@ -102,7 +103,7 @@ export default function News() {
       return new Date(year, month - 1, day, hour, minute, second);
   }
   
-    function emojis(score){
+    function emojis(score:any){
       if(score < -0.4){
         return <Angry/>
       }
@@ -123,7 +124,7 @@ export default function News() {
 
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main>
             This is a news page of a stock with id: {id}
             <h2>{jsonData.bestMatches[0]["2. name"]}</h2>
             <Table>
@@ -133,8 +134,6 @@ export default function News() {
                 <TableHead className="w-[100px]">Author</TableHead>
                 <TableHead>Source</TableHead>
                 <TableHead>Title</TableHead>
-                <TableHead>Sentiment Score</TableHead>
-                <TableHead>Emojis</TableHead>
                 <TableHead>Published Time</TableHead>
                 </TableRow>
             </TableHeader>
@@ -144,13 +143,18 @@ export default function News() {
                     <TableCell className="font-medium">{newsItem.authors.map((author) => author)}</TableCell>
                     <TableCell>{newsItem.source}</TableCell>
                     <TableCell>{newsItem.title}</TableCell>
-                    <TableCell>{newsItem.ticker_sentiment.find(ticker => ticker.ticker.toLowerCase() == id)?.ticker_sentiment_score}</TableCell>
-                    <TableCell>{emojis(newsItem.ticker_sentiment.find(ticker => ticker.ticker.toLowerCase() == id)?.ticker_sentiment_score)}</TableCell>
-                    <TableCell className="text-right">{formatDateTime(newsItem.time_published).toLocaleString('en-US', { timeZone: 'UTC', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric' })}</TableCell>
+                    <TableCell className="text-right">{newsItem.time_published}</TableCell>
                 </TableRow>
                 ))}
             </TableBody>
+            <TableFooter>
+                <TableRow>
+                <TableCell colSpan={3}>Total</TableCell>
+                <TableCell className="text-right">$2,500</TableCell>
+                </TableRow>
+            </TableFooter>
             </Table>
+
         </main>
     );
 }
