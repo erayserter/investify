@@ -67,9 +67,6 @@ export default function Chart() {
         .then((data) => setSignals(data));
   }, [id]);
 
-  console.log(signals);
-  console.log(candleData);
-
   if(signals == null){
     return <div> </div>
   }
