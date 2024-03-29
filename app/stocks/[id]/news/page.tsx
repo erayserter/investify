@@ -120,35 +120,33 @@ export default function News() {
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h2>{jsonData.bestMatches[0]["2. name"]}</h2>
-            <Table>
-            <TableHeader>
-                <TableRow>
-                <TableHead className="w-[100px]">Author</TableHead>
-                <TableHead>Source</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Published Time</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {newsData.feed.map((newsItem: NewsItem) => (
-                <TableRow key={newsItem.title}> 
-                    <TableCell className="font-medium">{newsItem.authors.map((author) => author)}</TableCell>
-                    <TableCell>{newsItem.source}</TableCell>
-                    <TableCell>{newsItem.title}</TableCell>
-                    <TableCell className="text-right">{newsItem.time_published}</TableCell>
-                </TableRow>
-                ))}
-            </TableBody>
-            <TableFooter>
-                <TableRow>
-                <TableCell colSpan={3}>Total</TableCell>
-                <TableCell className="text-right">$2,500</TableCell>
-                </TableRow>
-            </TableFooter>
-            </Table>
-
-        </main>
-    );
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <h2>{jsonData.bestMatches[0]["2. name"]}</h2>
+          <Table>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHeader>
+              <TableRow>
+              <TableHead className="w-[100px]">Author</TableHead>
+              <TableHead>Source</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Sentiment Score</TableHead>
+              <TableHead>Emojis</TableHead>
+              <TableHead>Published Time</TableHead>
+              </TableRow>
+          </TableHeader>
+          <TableBody>
+              {newsData.feed.map((newsItem: NewsItem) => (
+              <TableRow key={newsItem.title}> 
+                  <TableCell className="font-medium">{newsItem.authors.map((author) => author)}</TableCell>
+                  <TableCell>{newsItem.source}</TableCell>
+                  <TableCell>{newsItem.title}</TableCell>
+                  <TableCell>{newsItem.ticker_sentiment.find(ticker => ticker.ticker.toLowerCase() == id)?.ticker_sentiment_score}</TableCell>
+                  <TableCell>{emojis(newsItem.ticker_sentiment.find(ticker => ticker.ticker.toLowerCase() == id)?.ticker_sentiment_score)}</TableCell>
+                  <TableCell className="text-right">{formatDateTime(newsItem.time_published).toLocaleString('en-US', { timeZone: 'UTC', day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric' })}</TableCell>
+              </TableRow>
+              ))}
+          </TableBody>
+          </Table>
+      </main>
+  );
 }
