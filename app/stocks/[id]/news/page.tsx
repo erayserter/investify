@@ -89,14 +89,10 @@ export default function News() {
     }
     const jsonData: JsonResponse = details;
     const newsData: NewsData = news;
-    console.log(news);
-    console.log(jsonData.bestMatches[0]["2. name"]);
-    console.log("safaaaa2  " + id);
-
     
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main>
             This is a news page of a stock with id: {id}
             <h2>{jsonData.bestMatches[0]["2. name"]}</h2>
             <Table>
@@ -130,9 +126,3 @@ export default function News() {
         </main>
     );
 }
-/*
-
-
-*/
-
- //KCK3AWRYB9LFSHFO
