@@ -29,7 +29,7 @@ const stocks = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-24">
+    <main>
       <h1 className="text-6xl font-extrabold">Stocks</h1>
       <div className="flex gap-4 flex-wrap mt-8">
         {stocks.map((stock) => (

@@ -10,25 +10,8 @@ import {
     TableCell,
     TableHead,
     TableHeader,
-    TableRow,
-    TableFooter
+    TableRow
   } from "@/components/ui/table"
-  
-  interface CompanyData {
-    "1. symbol": string;
-    "2. name": string;
-    "3. type": string;
-    "4. region": string;
-    "5. marketOpen": string;
-    "6. marketClose": string;
-    "7. timezone": string;
-    "8. currency": string;
-    "9. matchScore": string;
-  }
-  
-  interface JsonResponse {
-    bestMatches: CompanyData[];
-  }
 
   interface NewsData {
     items: string;
@@ -86,7 +69,6 @@ export default function News() {
     if(details == null){
         return <div> </div>
     }
-    const jsonData: JsonResponse = details;
     const newsData: NewsData = news;
 
 
@@ -120,7 +102,7 @@ export default function News() {
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main className="flex min-h-screen flex-col items-center justify-between">
             <Table>
             <TableCaption>A list of {id} news.</TableCaption>
             <TableHeader>

@@ -25,7 +25,7 @@ import requests
 
 # from datetime import datetime, timedelta
 #
-data = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=YNCMGFZYA6QVXNN9&outputsize=full')
+data = requests.get('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=B1RTBBEBYASM2PBW&outputsize=full')
 data = data.json().get('Time Series (Daily)')
 filtered_data = {k: v for k, v in data.items() if k.startswith("2023")}
 array_data = [[k] + list(v.values()) for k, v in filtered_data.items()]

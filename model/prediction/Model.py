@@ -20,13 +20,13 @@ class Model:
 
     def predict(self, symbol):
         data = requests.get(
-            f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey=KAC4U304DX1ZWSES')
+            f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey=B1RTBBEBYASM2PBW')
         data = data.json().get('Time Series (Daily)')
         filtered_data = {k: v for k, v in data.items() if k.startswith("2024")}
         array_data = [[k] + list(v.values()) for k, v in filtered_data.items()]
 
         data = requests.get(
-            f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={symbol}&apikey=KAC4U304DX1ZWSES&limit=1000')
+            f'https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={symbol}&apikey=B1RTBBEBYASM2PBW&limit=1000')
         data = data.json().get('feed')
         sentiments_by_date = defaultdict(list)
         for item in data:
