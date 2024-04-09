@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BarChart4, Newspaper } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 const stocks = [
   {
@@ -101,14 +102,128 @@ const stocks = [
     name: "Qualcomm Inc.",
     logo: "https://s3-symbol-logo.tradingview.com/qualcomm--big.svg",
   },
+  {
+    symbol: "T",
+    name: "AT&T Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/at-and-t--big.svg",
+  },
+  {
+    symbol: "VZ",
+    name: "Verizon Communications Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/verizon--big.svg",
+  },
+  {
+    symbol: "KO",
+    name: "The Coca-Cola Co.",
+    logo: "https://s3-symbol-logo.tradingview.com/coca-cola--big.svg",
+  },
+  {
+    symbol: "PEP",
+    name: "PepsiCo Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/pepsico--big.svg",
+  },
+  {
+    symbol: "PG",
+    name: "Procter & Gamble Co.",
+    logo: "https://s3-symbol-logo.tradingview.com/procter-and-gamble--big.svg",
+  },
+  {
+    symbol: "UNH",
+    name: "UnitedHealth Group Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/unitedhealth--big.svg",
+  },
+  {
+    symbol: "MRK",
+    name: "Merck & Co. Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/merck--big.svg",
+  },
+  {
+    symbol: "PFE",
+    name: "Pfizer Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/pfizer--big.svg",
+  },
+  {
+    symbol: "JNJ",
+    name: "Johnson & Johnson",
+    logo: "https://s3-symbol-logo.tradingview.com/johnson-and-johnson--big.svg",
+  },
+  {
+    symbol: "COST",
+    name: "Costco Wholesale Corp.",
+    logo: "https://s3-symbol-logo.tradingview.com/costco-wholesale--big.svg",
+  },
+  {
+    symbol: "HD",
+    name: "The Home Depot Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/home-depot--big.svg",
+  },
+  {
+    symbol: "LOW",
+    name: "Lowe's Companies Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/lowe-s--big.svg",
+  },
+  {
+    symbol: "TGT",
+    name: "Target Corp.",
+    logo: "https://s3-symbol-logo.tradingview.com/target--big.svg",
+  },
+  {
+    symbol: "WBA",
+    name: "Walgreens Boots Alliance Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/walgreens-boots-alliance--big.svg",
+  },
+  {
+    symbol: "CVS",
+    name: "CVS Health Corp.",
+    logo: "https://s3-symbol-logo.tradingview.com/cvs-health--big.svg",
+  },
+  {
+    symbol: "XOM",
+    name: "Exxon Mobil Corp.",
+    logo: "https://s3-symbol-logo.tradingview.com/exxon--big.svg",
+  },
+  {
+    symbol: "CVX",
+    name: "Chevron Corp.",
+    logo: "https://s3-symbol-logo.tradingview.com/chevron--big.svg",
+  },
+  {
+    symbol: "MRT",
+    name: "Marti Technologies, Inc.",
+    logo: "https://s3-symbol-logo.tradingview.com/marti-technologies--big.svg",
+  },
 ];
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const [queryStocks, setQueryStocks] = useState(stocks);
+
+  const query = searchParams.get("q");
+
+  const fetchQueryStocks = useCallback(async () => {
+    if (!query) {
+      setQueryStocks(stocks);
+      return;
+    }
+
+    const filteredStocks = stocks.filter(
+      (stock) =>
+        stock.symbol.toLowerCase().includes(query.toLowerCase()) ||
+        stock.name.toLowerCase().includes(query.toLowerCase()),
+    );
+
+    setQueryStocks(filteredStocks);
+  }, [query]);
+
+  useEffect(() => {
+    fetchQueryStocks();
+  }, [query, fetchQueryStocks]);
+
   return (
-    <main>
+    <main className="w-full">
       <h1 className="text-6xl font-extrabold">Stocks</h1>
       <div className="mt-8 flex flex-wrap gap-4">
-        {stocks.map((stock) => (
+        {queryStocks.map((stock) => (
           <div
             key={stock.symbol}
             className="flex items-center justify-center gap-6 rounded-full bg-[#2a2e39] p-5 pr-8"

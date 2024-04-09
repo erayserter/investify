@@ -1,43 +1,35 @@
 "use client";
 
-import React, {useEffect, useState} from 'react';
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
 
 const SearchBar = () => {
-    const [query, setQuery] = useState("");
-    const [stocks, setStocks] = useState([]);
+  const [input, setInput] = useState("");
+  const router = useRouter();
 
-    const fetchStocks = async () => {
-        if (!query) {
-            setStocks([]);
-            return;
-        }
-
-        const response = await fetch("/api/stocks", {
-            method: "POST",
-            body: JSON.stringify({query}),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        });
-        const data = await response.json();
-        console.log(data)
-        setStocks(data);
+  const createQuery = useCallback(() => {
+    if (input.length === 0) {
+      router.push("/");
+      return;
     }
 
-    useEffect(() => {
-        const timeOutId = setTimeout(fetchStocks, 750);
-        return () => clearTimeout(timeOutId);
-    }, [query]);
+    router.push(`/?q=${input}`);
+  }, [input, router]);
 
-    return (
-            <input
-                className="h-10 bg-background rounded-lg pl-4 border border-amber-50"
-                type="text"
-                placeholder="Search"
-                value={query}
-                onChange={event => setQuery(event.target.value)}
-            />
-    );
+  useEffect(() => {
+    const timeOutId = setTimeout(createQuery, 750);
+    return () => clearTimeout(timeOutId);
+  }, [input, createQuery]);
+
+  return (
+    <input
+      className="h-10 rounded-lg border border-amber-50 bg-background pl-4"
+      type="text"
+      placeholder="Search"
+      value={input}
+      onChange={(event) => setInput(event.target.value)}
+    />
+  );
 };
 
 export default SearchBar;
